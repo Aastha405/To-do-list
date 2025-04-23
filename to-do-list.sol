@@ -24,4 +24,15 @@ contract ToDoList {
     function getTasksCount() public view returns (uint) {
         return tasks.length;
     }
+
+    // Function to delete a task by index
+    function deleteTask(uint _index) public {
+        require(_index < tasks.length, "Invalid task index");
+
+        // Shift tasks to fill the gap
+        for (uint i = _index; i < tasks.length - 1; i++) {
+            tasks[i] = tasks[i + 1];
+        }
+        tasks.pop(); // Remove the last task (now duplicate)
+    }
 }
