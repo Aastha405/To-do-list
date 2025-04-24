@@ -35,4 +35,11 @@ contract ToDoList {
         }
         tasks.pop(); // Remove the last task (now duplicate)
     }
+
+    // Function to get task details by index
+    function getTask(uint _index) public view returns (string memory description, bool completed) {
+        require(_index < tasks.length, "Invalid task index");
+        Task storage task = tasks[_index];
+        return (task.description, task.completed);
+    }
 }
