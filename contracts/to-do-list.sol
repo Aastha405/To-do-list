@@ -20,6 +20,12 @@ contract ToDoList {
         tasks[_index].completed = true;
     }
 
+    // Function to update the description of a task
+    function updateTask(uint _index, string memory _newDescription) public {
+        require(_index < tasks.length, "Invalid task index");
+        tasks[_index].description = _newDescription;
+    }
+
     // Helper function to get total number of tasks
     function getTasksCount() public view returns (uint) {
         return tasks.length;
@@ -29,11 +35,10 @@ contract ToDoList {
     function deleteTask(uint _index) public {
         require(_index < tasks.length, "Invalid task index");
 
-        // Shift tasks to fill the gap
         for (uint i = _index; i < tasks.length - 1; i++) {
             tasks[i] = tasks[i + 1];
         }
-        tasks.pop(); // Remove the last task (now duplicate)
+        tasks.pop();
     }
 
     // Function to get task details by index
