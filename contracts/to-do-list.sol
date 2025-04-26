@@ -47,4 +47,9 @@ contract ToDoList {
         Task storage task = tasks[_index];
         return (task.description, task.completed);
     }
+
+    // Function to get all tasks
+    function getAllTasks() public view returns (Task[] memory) {
+        return tasks;
+    }
 }
