@@ -52,4 +52,10 @@ contract ToDoList {
     function getAllTasks() public view returns (Task[] memory) {
         return tasks;
     }
+
+    // Function to toggle the completion status of a task
+    function toggleCompleteTask(uint _index) public {
+        require(_index < tasks.length, "Invalid task index");
+        tasks[_index].completed = !tasks[_index].completed;
+    }
 }
