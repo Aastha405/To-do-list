@@ -58,4 +58,16 @@ contract ToDoList {
         require(_index < tasks.length, "Invalid task index");
         tasks[_index].completed = !tasks[_index].completed;
     }
+
+    // Function to clear all completed tasks
+    function clearCompletedTasks() public {
+        uint i = 0;
+        while (i < tasks.length) {
+            if (tasks[i].completed) {
+                deleteTask(i);
+            } else {
+                i++;
+            }
+        }
+    }
 }
