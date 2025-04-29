@@ -70,4 +70,39 @@ contract ToDoList {
             }
         }
     }
+
+    // Function to get the count of pending tasks (not completed)
+    function getPendingTasksCount() public view returns (uint) {
+        uint count = 0;
+        for (uint i = 0; i < tasks.length; i++) {
+            if (!tasks[i].completed) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    // Function to get the count of completed tasks
+    function getCompletedTasksCount() public view returns (uint) {
+        uint count = 0;
+        for (uint i = 0; i < tasks.length; i++) {
+            if (tasks[i].completed) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    // Function to get the description of a task by index
+    function getTaskDescriptionByIndex(uint _index) public view returns (string memory) {
+        require(_index < tasks.length, "Invalid task index");
+        return tasks[_index].description;
+    }
+
+    // Function to mark all tasks as completed
+    function markAllTasksCompleted() public {
+        for (uint i = 0; i < tasks.length; i++) {
+            tasks[i].completed = true;
+        }
+    }
 }
