@@ -1,14 +1,14 @@
-##📝 Project Title: On-Chain ToDoList DApp
+## 📝 Project Title: On-Chain ToDoList DApp
 
-##📌 Project Description
+## 📌 Project Description
 
 The ToDoList is a decentralized task management system built on the Ethereum blockchain using Solidity. It allows users to create, manage, and organize their daily tasks in a trustless, immutable, and transparent manner. All operations — from adding to deleting tasks — are handled via smart contract functions, ensuring decentralized access and full user control over their data.
 
-##🎯 Project Vision
+## 🎯 Project Vision
 
 To empower individuals with a blockchain-based productivity tool that ensures task management is transparent, secure, and censorship-resistant. By building an open, permissionless To-Do List, we aim to introduce users to the utility of decentralized applications through a familiar real-world use case.
 
-##🚀 Key Features
+## 🚀 Key Features
 
 # Add Task: Create a new task with a simple description.
 # Update Task: Modify the task description.
@@ -23,7 +23,7 @@ To empower individuals with a blockchain-based productivity tool that ensures ta
 # Search Task by Description: Locate task index by matching description.
 # Get All Pending Tasks: Retrieve only the incomplete tasks.
 
-##🔭 Future Scope
+## 🔭 Future Scope
 
 # 🔒 Access Control: Implement per-user task lists using msg.sender and mappings for multi-user support.
 # 🌐 Frontend Integration: Build a React-based frontend to interact with the contract via Web3 or Ethers.js.
