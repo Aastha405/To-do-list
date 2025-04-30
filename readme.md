@@ -1,29 +1,50 @@
-# ToDoList Smart Contract
+📝 Project Title: On-Chain ToDoList DApp
+📌 Project Description
+The ToDoList is a decentralized task management system built on the Ethereum blockchain using Solidity. It allows users to create, manage, and organize their daily tasks in a trustless, immutable, and transparent manner. All operations — from adding to deleting tasks — are handled via smart contract functions, ensuring decentralized access and full user control over their data.
 
-## 📝 Project Title
-**ToDoList DApp - A Simple Ethereum-Based Task Manager**
+🎯 Project Vision
+To empower individuals with a blockchain-based productivity tool that ensures task management is transparent, secure, and censorship-resistant. By building an open, permissionless To-Do List, we aim to introduce users to the utility of decentralized applications through a familiar real-world use case.
 
-## 📌 Project Description
-The ToDoList smart contract is a decentralized task management system built on the Ethereum blockchain using Solidity. It allows users to add, complete, and delete tasks, providing a trustless and transparent way to manage personal or shared to-do items.
+🚀 Key Features
+Add Task: Create a new task with a simple description.
 
-## 🎯 Project Vision
-The vision behind ToDoList is to offer a simple yet powerful decentralized alternative to traditional to-do apps. By leveraging blockchain, the project aims to demonstrate how even basic productivity tools can be made censorship-resistant, transparent, and immutable.
+Update Task: Modify the task description.
 
-## 🚀 Key Features
-- ✅ **Add Task**: Users can create new tasks with descriptions.
-- ✔️ **Mark Task as Completed**: Tasks can be marked completed by their index.
-- ❌ **Delete Task**: Users can remove a task from the list by specifying its index.
-- 📊 **Get Task Count**: Returns the total number of tasks created.
+Mark as Completed: Mark tasks as completed.
 
-## 🔮 Future Scope
-- 🔐 **Access Control**: Add ownership or user-based task access using wallet addresses.
-- 🌐 **Front-End Integration**: Build a React-based frontend to interact with the smart contract via Web3.js or Ethers.js.
-- 🧾 **Event Logging**: Emit events for actions like task creation, completion, and deletion to enable real-time UI updates.
-- 📱 **Mobile Support**: Integrate with wallets like MetaMask Mobile and Trust Wallet for mobile task management.
-- 💾 **Off-chain Storage**: Integrate IPFS or Filecoin for storing extended task metadata or attachments.
+Toggle Completion: Toggle task completion status.
 
+Delete Task: Remove tasks by index.
+
+Get Task Details: Retrieve description and completion status.
+
+Get All Tasks: Fetch all tasks stored in the contract.
+
+Get Task Counts: Total, completed, and pending task counts.
+
+Clear Completed Tasks: Batch remove completed tasks.
+
+Mark All Tasks as Completed: One-click completion for all tasks.
+
+Search Task by Description: Locate task index by matching description.
+
+Get All Pending Tasks: Retrieve only the incomplete tasks.
+
+🔭 Future Scope
+🔒 Access Control: Implement per-user task lists using msg.sender and mappings for multi-user support.
+
+🌐 Frontend Integration: Build a React-based frontend to interact with the contract via Web3 or Ethers.js.
+
+📱 Mobile DApp Version: Extend support to mobile DApp browsers like MetaMask Mobile or Trust Wallet.
+
+📦 IPFS/Storage Support: Integrate with IPFS for storing rich task metadata or file attachments.
+
+📅 Deadline and Priority Tags: Add optional deadline fields, reminders, and task priorities.
+
+📈 Analytics Dashboard: Visualize productivity metrics like completion rate, daily stats, and trends.
 ---
 
-## contract details : 0xa340b8722C8dCD21F581a6E4BEeFEdffEbD2fcd0
-<img width="1113" alt="image" src="https://github.com/user-attachments/assets/ca84c82d-6c8c-46ab-bdda-f3c4692e27b6" />
+## contract details : 0x32AdB871997613D255B959556062e979B78A8ddC
+<img width="1105" alt="image" src="https://github.com/user-attachments/assets/be10d389-49c4-4de8-8220-37c2663f2e33" />
+
 
