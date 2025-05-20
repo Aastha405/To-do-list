@@ -1,39 +1,32 @@
-## 📝 Project Title: On-Chain ToDoList DApp
+# ToDoList Smart Contract
 
-## 📌 Project Description
-
-The ToDoList is a decentralized task management system built on the Ethereum blockchain using Solidity. It allows users to create, manage, and organize their daily tasks in a trustless, immutable, and transparent manner. All operations — from adding to deleting tasks — are handled via smart contract functions, ensuring decentralized access and full user control over their data.
+## 📝 Project Description
+This is a simple blockchain-based ToDo List DApp implemented in Solidity using the Hardhat framework. Users can add, update, delete, and toggle tasks on-chain, ensuring transparency and permanence of task records.
 
 ## 🎯 Project Vision
+The aim is to bring a decentralized productivity app where users own their data and can transparently manage tasks in a tamper-proof way using smart contracts.
 
-To empower individuals with a blockchain-based productivity tool that ensures task management is transparent, secure, and censorship-resistant. By building an open, permissionless To-Do List, we aim to introduce users to the utility of decentralized applications through a familiar real-world use case.
+## 🔑 Key Features
+- Add new tasks with timestamps.
+- Update or delete tasks.
+- Mark tasks as complete/incomplete.
+- Toggle task completion.
+- Count completed/pending tasks.
+- Get individual task details.
+- Retrieve all tasks.
+- Clear all tasks.
 
-## 🚀 Key Features
+## 🚀 Future Scope
+- Integrate with a frontend (React + Web3.js or Ethers.js).
+- Enable user authentication via wallet.
+- Store metadata on IPFS.
+- Add role-based access and multi-user support.
+- Include due dates and reminder notifications.
 
-# Add Task: Create a new task with a simple description.
-# Update Task: Modify the task description.
-# Mark as Completed: Mark tasks as completed.
-# Toggle Completion: Toggle task completion status.
-# Delete Task: Remove tasks by index.
-# Get Task Details: Retrieve description and completion status.
-# Get All Tasks: Fetch all tasks stored in the contract.
-# Get Task Counts: Total, completed, and pending task counts.
-# Clear Completed Tasks: Batch remove completed tasks.
-# Mark All Tasks as Completed: One-click completion for all tasks.
-# Search Task by Description: Locate task index by matching description.
-# Get All Pending Tasks: Retrieve only the incomplete tasks.
+## 🔧 Deployment
+Deployed using Hardhat on Core Testnet 2  
+RPC: https://rpc.test2.btcs.network
 
-## 🔭 Future Scope
+## Contract Id : 0x708B1Bd4e9234E1242C54C065047DE5E1e530b55
 
-# 🔒 Access Control: Implement per-user task lists using msg.sender and mappings for multi-user support.
-# 🌐 Frontend Integration: Build a React-based frontend to interact with the contract via Web3 or Ethers.js.
-# 📱 Mobile DApp Version: Extend support to mobile DApp browsers like MetaMask Mobile or Trust Wallet.
-# 📦 IPFS/Storage Support: Integrate with IPFS for storing rich task metadata or file attachments.
-# 📅 Deadline and Priority Tags: Add optional deadline fields, reminders, and task priorities.
-# 📈 Analytics Dashboard: Visualize productivity metrics like completion rate, daily stats, and trends.
----
-
-## contract details : 0x32AdB871997613D255B959556062e979B78A8ddC
-<img width="1105" alt="image" src="https://github.com/user-attachments/assets/be10d389-49c4-4de8-8220-37c2663f2e33" />
-
-
+<img width="1149" alt="image" src="https://github.com/user-attachments/assets/2a15ee13-7771-476b-9c80-2ab78378f4c1" />
