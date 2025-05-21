@@ -16,6 +16,8 @@ contract ToDoList {
     event TaskDeleted(uint indexed taskId);
     event TaskToggled(uint indexed taskId);
     event AllTasksCleared();
+    event AllTasksMarkedCompleted();
+    event AllTasksMarkedPending();
 
     function addTask(string memory _description) public {
         tasks.push(Task(_description, false, block.timestamp));
@@ -74,5 +76,51 @@ contract ToDoList {
         for (uint i = 0; i < tasks.length; i++) {
             if (!tasks[i].completed) count++;
         }
+    }
+
+    function markAllCompleted() public {
+        for (uint i = 0; i < tasks.length; i++) {
+            tasks[i].completed = true;
+        }
+        emit AllTasksMarkedCompleted();
+    }
+
+    function markAllPending() public {
+        for (uint i = 0; i < tasks.length; i++) {
+            tasks[i].completed = false;
+        }
+        emit AllTasksMarkedPending();
+    }
+
+    function getTasksByStatus(bool _completed) public view returns (Task[] memory) {
+        uint count = 0;
+        for (uint i = 0; i < tasks.length; i++) {
+            if (tasks[i].completed == _completed) {
+                count++;
+            }
+        }
+
+        Task[] memory filtered = new Task[](count);
+        uint j = 0;
+        for (uint i = 0; i < tasks.length; i++) {
+            if (tasks[i].completed == _completed) {
+                filtered[j++] = tasks[i];
+            }
+        }
+        return filtered;
+    }
+
+    function getLatestTask() public view returns (string memory, bool, uint) {
+        require(tasks.length > 0, "No tasks found");
+        Task memory task = tasks[tasks.length - 1];
+        return (task.description, task.completed, task.timestamp);
+    }
+
+    function getTaskCount() public view returns (uint) {
+        return tasks.length;
+    }
+
+    function isTaskExists(uint _index) public view returns (bool) {
+        return _index < tasks.length;
     }
 }
