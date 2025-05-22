@@ -27,6 +27,7 @@ The aim is to bring a decentralized productivity app where users own their data 
 Deployed using Hardhat on Core Testnet 2  
 RPC: https://rpc.test2.btcs.network
 
+
 ## Contract Id : 0x708B1Bd4e9234E1242C54C065047DE5E1e530b55
 
 <img width="1149" alt="image" src="https://github.com/user-attachments/assets/2a15ee13-7771-476b-9c80-2ab78378f4c1" />
