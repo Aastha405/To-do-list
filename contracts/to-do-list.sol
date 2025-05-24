@@ -123,4 +123,42 @@ contract ToDoList {
     function isTaskExists(uint _index) public view returns (bool) {
         return _index < tasks.length;
     }
+
+    function searchTaskByKeyword(string memory _keyword) public view returns (Task[] memory) {
+        uint count = 0;
+        bytes memory keywordBytes = bytes(_keyword);
+
+        for (uint i = 0; i < tasks.length; i++) {
+            if (_contains(tasks[i].description, keywordBytes)) {
+                count++;
+            }
+        }
+
+        Task[] memory results = new Task[](count);
+        uint j = 0;
+        for (uint i = 0; i < tasks.length; i++) {
+            if (_contains(tasks[i].description, keywordBytes)) {
+                results[j++] = tasks[i];
+            }
+        }
+
+        return results;
+    }
+
+    function _contains(string memory what, bytes memory keyword) internal pure returns (bool) {
+        bytes memory whatBytes = bytes(what);
+        if (keyword.length > whatBytes.length) return false;
+
+        for (uint i = 0; i <= whatBytes.length - keyword.length; i++) {
+            bool match = true;
+            for (uint j = 0; j < keyword.length; j++) {
+                if (whatBytes[i + j] != keyword[j]) {
+                    match = false;
+                    break;
+                }
+            }
+            if (match) return true;
+        }
+        return false;
+    }
 }
