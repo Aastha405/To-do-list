@@ -145,6 +145,25 @@ contract ToDoList {
         return results;
     }
 
+    function getTasksCreatedAfter(uint _timestamp) public view returns (Task[] memory) {
+        uint count = 0;
+        for (uint i = 0; i < tasks.length; i++) {
+            if (tasks[i].timestamp > _timestamp) {
+                count++;
+            }
+        }
+
+        Task[] memory recentTasks = new Task[](count);
+        uint j = 0;
+        for (uint i = 0; i < tasks.length; i++) {
+            if (tasks[i].timestamp > _timestamp) {
+                recentTasks[j++] = tasks[i];
+            }
+        }
+
+        return recentTasks;
+    }
+
     function _contains(string memory what, bytes memory keyword) internal pure returns (bool) {
         bytes memory whatBytes = bytes(what);
         if (keyword.length > whatBytes.length) return false;
