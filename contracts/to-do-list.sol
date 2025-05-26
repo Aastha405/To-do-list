@@ -116,6 +116,12 @@ contract ToDoList {
         return (task.description, task.completed, task.timestamp);
     }
 
+    function getOldestTask() public view returns (string memory, bool, uint) {
+        require(tasks.length > 0, "No tasks available");
+        Task memory task = tasks[0];
+        return (task.description, task.completed, task.timestamp);
+    }
+
     function getTaskCount() public view returns (uint) {
         return tasks.length;
     }
