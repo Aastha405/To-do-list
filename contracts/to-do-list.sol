@@ -170,6 +170,27 @@ contract ToDoList {
         return recentTasks;
     }
 
+    function getTasksBetweenTimestamps(uint _start, uint _end) public view returns (Task[] memory) {
+        require(_start <= _end, "Invalid time range");
+
+        uint count = 0;
+        for (uint i = 0; i < tasks.length; i++) {
+            if (tasks[i].timestamp >= _start && tasks[i].timestamp <= _end) {
+                count++;
+            }
+        }
+
+        Task[] memory rangeTasks = new Task[](count);
+        uint j = 0;
+        for (uint i = 0; i < tasks.length; i++) {
+            if (tasks[i].timestamp >= _start && tasks[i].timestamp <= _end) {
+                rangeTasks[j++] = tasks[i];
+            }
+        }
+
+        return rangeTasks;
+    }
+
     function _contains(string memory what, bytes memory keyword) internal pure returns (bool) {
         bytes memory whatBytes = bytes(what);
         if (keyword.length > whatBytes.length) return false;
