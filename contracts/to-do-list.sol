@@ -191,6 +191,14 @@ contract ToDoList {
         return rangeTasks;
     }
 
+    function getTaskDescriptions() public view returns (string[] memory) {
+        string[] memory descriptions = new string[](tasks.length);
+        for (uint i = 0; i < tasks.length; i++) {
+            descriptions[i] = tasks[i].description;
+        }
+        return descriptions;
+    }
+
     function _contains(string memory what, bytes memory keyword) internal pure returns (bool) {
         bytes memory whatBytes = bytes(what);
         if (keyword.length > whatBytes.length) return false;
