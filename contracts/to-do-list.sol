@@ -199,6 +199,21 @@ contract ToDoList {
         return descriptions;
     }
 
+    function getTaskStats() public view returns (uint total, uint completed, uint pending) {
+        uint _completed = 0;
+        uint _pending = 0;
+
+        for (uint i = 0; i < tasks.length; i++) {
+            if (tasks[i].completed) {
+                _completed++;
+            } else {
+                _pending++;
+            }
+        }
+
+        return (tasks.length, _completed, _pending);
+    }
+
     function _contains(string memory what, bytes memory keyword) internal pure returns (bool) {
         bytes memory whatBytes = bytes(what);
         if (keyword.length > whatBytes.length) return false;
