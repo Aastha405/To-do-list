@@ -4,33 +4,158 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ToDoList dApp</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap">
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      overflow-x: hidden;
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 20px;
+      background: -webkit-linear-gradient(#00f2fe, #4facfe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .wallet-connect {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    button, select, input[type="text"], input[type="datetime-local"] {
+      padding: 10px 15px;
+      margin: 8px 0;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      outline: none;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    button {
+      background: linear-gradient(135deg, #ff6a00, #ee0979);
+      color: white;
+      font-weight: bold;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+      transform: scale(1.03);
+    }
+
+    form {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      animation: fadeIn 1.5s ease;
+    }
+
+    #filters {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      display: grid;
+      gap: 15px;
+      animation: fadeIn 2s ease;
+    }
+
+    label {
+      font-weight: bold;
+      color: #a0d9ff;
+    }
+
+    #taskList {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeIn 2.5s ease;
+    }
+
+    .task-card {
+      background: rgba(255, 255, 255, 0.07);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      transition: 0.3s;
+    }
+
+    .task-card:hover {
+      transform: scale(1.01);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .task-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      color: #ccc;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h1>📝 ToDoList dApp</h1>
-    <button id="connectButton">Connect Wallet</button>
+
+    <div class="wallet-connect">
+      <button id="connectButton">🔗 Connect Wallet</button>
+    </div>
 
     <form id="taskForm">
-      <input type="text" id="description" placeholder="Task description" required />
+      <h2 style="color:#ffc107;">➕ Add New Task</h2>
+      <input type="text" id="description" placeholder="Enter task description" required />
       <input type="datetime-local" id="expiration" required />
       <select id="priority">
-        <option value="1">Low</option>
-        <option value="2" selected>Medium</option>
-        <option value="3">High</option>
+        <option value="1">Low Priority</option>
+        <option value="2" selected>Medium Priority</option>
+        <option value="3">High Priority</option>
       </select>
       <button type="submit">Add Task</button>
     </form>
 
     <div id="filters">
-      <label for="statusFilter">Filter by Status:</label>
+      <h2 style="color:#00d2ff;">🔍 Filter Tasks</h2>
+      <label for="statusFilter">By Status:</label>
       <select id="statusFilter">
         <option value="all">All</option>
         <option value="completed">Completed</option>
         <option value="pending">Pending</option>
       </select>
 
-      <label for="priorityFilter">Filter by Priority:</label>
+      <label for="priorityFilter">By Priority:</label>
       <select id="priorityFilter">
         <option value="all">All</option>
         <option value="1">Low</option>
@@ -39,7 +164,9 @@
       </select>
     </div>
 
-    <div id="taskList"></div>
+    <div id="taskList">
+      <!-- Dynamically loaded tasks will appear here -->
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
