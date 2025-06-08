@@ -145,4 +145,27 @@ contract ToDoList {
     function isTaskExists(uint _index) public view returns (bool) {
         return _index < userTasks[msg.sender].length;
     }
+
+    // 🆕 New Function: Get upcoming tasks within X seconds
+    function getUpcomingTasks(uint _withinSeconds) public view returns (Task[] memory) {
+        Task[] storage tasks = userTasks[msg.sender];
+        uint currentTime = block.timestamp;
+        uint count = 0;
+
+        for (uint i = 0; i < tasks.length; i++) {
+            if (tasks[i].expiration > currentTime && tasks[i].expiration <= currentTime + _withinSeconds) {
+                count++;
+            }
+        }
+
+        Task[] memory upcoming = new Task[](count);
+        uint j = 0;
+        for (uint i = 0; i < tasks.length; i++) {
+            if (tasks[i].expiration > currentTime && tasks[i].expiration <= currentTime + _withinSeconds) {
+                upcoming[j++] = tasks[i];
+            }
+        }
+
+        return upcoming;
+    }
 }
