@@ -146,7 +146,6 @@ contract ToDoList {
         return _index < userTasks[msg.sender].length;
     }
 
-    // 🆕 New Function: Get upcoming tasks within X seconds
     function getUpcomingTasks(uint _withinSeconds) public view returns (Task[] memory) {
         Task[] storage tasks = userTasks[msg.sender];
         uint currentTime = block.timestamp;
@@ -167,5 +166,27 @@ contract ToDoList {
         }
 
         return upcoming;
+    }
+
+    // 🆕 New Function: Return overdue and incomplete tasks
+    function getOverdueIncompleteTasks() public view returns (Task[] memory) {
+        Task[] storage tasks = userTasks[msg.sender];
+        uint count = 0;
+
+        for (uint i = 0; i < tasks.length; i++) {
+            if (!tasks[i].completed && tasks[i].expiration > 0 && block.timestamp > tasks[i].expiration) {
+                count++;
+            }
+        }
+
+        Task[] memory overdue = new Task[](count);
+        uint j = 0;
+        for (uint i = 0; i < tasks.length; i++) {
+            if (!tasks[i].completed && tasks[i].expiration > 0 && block.timestamp > tasks[i].expiration) {
+                overdue[j++] = tasks[i];
+            }
+        }
+
+        return overdue;
     }
 }
