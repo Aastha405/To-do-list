@@ -1,15 +1,27 @@
+// scripts/deploy.js
+
 const hre = require("hardhat");
 
 async function main() {
+  // Compile contracts (optional in Hardhat >=2.0, but good for clarity)
+  await hre.run('compile');
+
+  // Get the contract factory
   const ToDoList = await hre.ethers.getContractFactory("ToDoList");
-  const todo = await ToDoList.deploy();
 
-  await todo.deployed();
+  // Deploy the contract
+  const todoList = await ToDoList.deploy();
 
-  console.log("ToDoList deployed to:", todo.address);
+  // Wait for deployment to complete
+  await todoList.deployed();
+
+  // Log the deployed address
+  console.log("✅ ToDoList contract deployed to:", todoList.address);
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error("❌ Deployment failed:", error);
+    process.exit(1);
+  });
