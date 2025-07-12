@@ -22,6 +22,7 @@ contract ToDoList {
     event AllTasksCleared(address indexed user);
     event AllTasksMarkedCompleted(address indexed user);
     event AllTasksMarkedPending(address indexed user);
+    event TaskExpirationUpdated(address indexed user, uint indexed taskId, uint newExpiration); // 🆕 event added
 
     modifier validIndex(uint _index) {
         require(_index < userTasks[msg.sender].length, "Invalid index");
@@ -168,7 +169,6 @@ contract ToDoList {
         return upcoming;
     }
 
-    // 🆕 New Function: Return overdue and incomplete tasks
     function getOverdueIncompleteTasks() public view returns (Task[] memory) {
         Task[] storage tasks = userTasks[msg.sender];
         uint count = 0;
@@ -188,5 +188,11 @@ contract ToDoList {
         }
 
         return overdue;
+    }
+
+    // 🆕 New Function: Update task expiration
+    function updateTaskExpiration(uint _index, uint _newExpiration) public validIndex(_index) {
+        userTasks[msg.sender][_index].expiration = _newExpiration;
+        emit TaskExpirationUpdated(msg.sender, _index, _newExpiration);
     }
 }
