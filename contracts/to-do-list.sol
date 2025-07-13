@@ -22,7 +22,8 @@ contract ToDoList {
     event AllTasksCleared(address indexed user);
     event AllTasksMarkedCompleted(address indexed user);
     event AllTasksMarkedPending(address indexed user);
-    event TaskExpirationUpdated(address indexed user, uint indexed taskId, uint newExpiration); // 🆕 event added
+    event TaskExpirationUpdated(address indexed user, uint indexed taskId, uint newExpiration);
+    event TaskPriorityUpdated(address indexed user, uint indexed taskId, Priority newPriority); // 🆕
 
     modifier validIndex(uint _index) {
         require(_index < userTasks[msg.sender].length, "Invalid index");
@@ -165,7 +166,6 @@ contract ToDoList {
                 upcoming[j++] = tasks[i];
             }
         }
-
         return upcoming;
     }
 
@@ -186,13 +186,17 @@ contract ToDoList {
                 overdue[j++] = tasks[i];
             }
         }
-
         return overdue;
     }
 
-    // 🆕 New Function: Update task expiration
     function updateTaskExpiration(uint _index, uint _newExpiration) public validIndex(_index) {
         userTasks[msg.sender][_index].expiration = _newExpiration;
         emit TaskExpirationUpdated(msg.sender, _index, _newExpiration);
+    }
+
+    // 🆕 New Function: Update priority of a task
+    function updateTaskPriority(uint _index, Priority _newPriority) public validIndex(_index) {
+        userTasks[msg.sender][_index].priority = _newPriority;
+        emit TaskPriorityUpdated(msg.sender, _index, _newPriority);
     }
 }
