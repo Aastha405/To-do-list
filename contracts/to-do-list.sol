@@ -23,7 +23,7 @@ contract ToDoList {
     event AllTasksMarkedCompleted(address indexed user);
     event AllTasksMarkedPending(address indexed user);
     event TaskExpirationUpdated(address indexed user, uint indexed taskId, uint newExpiration);
-    event TaskPriorityUpdated(address indexed user, uint indexed taskId, Priority newPriority); // 🆕
+    event TaskPriorityUpdated(address indexed user, uint indexed taskId, Priority newPriority);
 
     modifier validIndex(uint _index) {
         require(_index < userTasks[msg.sender].length, "Invalid index");
@@ -140,21 +140,11 @@ contract ToDoList {
         return priorityTasks;
     }
 
-    function getTaskCount() public view returns (uint) {
-        return userTasks[msg.sender].length;
-    }
-
-    function isTaskExists(uint _index) public view returns (bool) {
-        return _index < userTasks[msg.sender].length;
-    }
-
     function getUpcomingTasks(uint _withinSeconds) public view returns (Task[] memory) {
         Task[] storage tasks = userTasks[msg.sender];
-        uint currentTime = block.timestamp;
         uint count = 0;
-
         for (uint i = 0; i < tasks.length; i++) {
-            if (tasks[i].expiration > currentTime && tasks[i].expiration <= currentTime + _withinSeconds) {
+            if (tasks[i].expiration > block.timestamp && tasks[i].expiration <= block.timestamp + _withinSeconds) {
                 count++;
             }
         }
@@ -162,7 +152,7 @@ contract ToDoList {
         Task[] memory upcoming = new Task[](count);
         uint j = 0;
         for (uint i = 0; i < tasks.length; i++) {
-            if (tasks[i].expiration > currentTime && tasks[i].expiration <= currentTime + _withinSeconds) {
+            if (tasks[i].expiration > block.timestamp && tasks[i].expiration <= block.timestamp + _withinSeconds) {
                 upcoming[j++] = tasks[i];
             }
         }
@@ -172,7 +162,6 @@ contract ToDoList {
     function getOverdueIncompleteTasks() public view returns (Task[] memory) {
         Task[] storage tasks = userTasks[msg.sender];
         uint count = 0;
-
         for (uint i = 0; i < tasks.length; i++) {
             if (!tasks[i].completed && tasks[i].expiration > 0 && block.timestamp > tasks[i].expiration) {
                 count++;
@@ -194,9 +183,26 @@ contract ToDoList {
         emit TaskExpirationUpdated(msg.sender, _index, _newExpiration);
     }
 
-    // 🆕 New Function: Update priority of a task
     function updateTaskPriority(uint _index, Priority _newPriority) public validIndex(_index) {
         userTasks[msg.sender][_index].priority = _newPriority;
         emit TaskPriorityUpdated(msg.sender, _index, _newPriority);
+    }
+
+    // 🆕 New Function: Provide a task summary
+    function getTaskSummary() public view returns (
+        uint totalTasks, uint completedTasks, uint pendingTasks, uint expiredTasks, uint overdueTasks
+    ) {
+        Task[] storage tasks = userTasks[msg.sender];
+        totalTasks = tasks.length;
+
+        for (uint i = 0; i < tasks.length; i++) {
+            if (tasks[i].completed) completedTasks++;
+            else pendingTasks++;
+
+            if (tasks[i].expiration > 0 && block.timestamp > tasks[i].expiration) {
+                expiredTasks++;
+                if (!tasks[i].completed) overdueTasks++;
+            }
+        }
     }
 }
