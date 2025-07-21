@@ -1,5 +1,28 @@
 # ToDoList Smart Contract
 
+## 🛠 Core Features
+
+-- Task Management:
+
+- Add, Update, Delete, Complete, and Toggle tasks.
+- Manage task descriptions, deadlines, and priorities (Low, Medium, High).
+
+-- Enhanced Queries:
+
+- Retrieve tasks based on status (completed/pending).
+- Filter tasks by expiration (upcoming, expired, overdue).
+- Filter tasks by priority level.
+
+-- Bulk Operations:
+
+- Clear all tasks instantly.
+- Mark all tasks as complete or pending in one go.
+
+-- Advanced Updates:
+
+- Update task expiration times.
+- Modify task priority dynamically.
+
 ## 📝 Project Description
 This is a simple blockchain-based ToDo List DApp implemented in Solidity using the Hardhat framework. Users can add, update, delete, and toggle tasks on-chain, ensuring transparency and permanence of task records.
 
