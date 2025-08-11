@@ -15,11 +15,15 @@ contract TaskReward {
         require(reward > 0, "No rewards to claim");
 
         earnedRewards[msg.sender] = 0;
-
-        // Here we simply send Ether, but this could also be an ERC20 transfer
         payable(msg.sender).transfer(reward);
     }
 
     // Allow contract to receive Ether
     receive() external payable {}
+
+    // Add reward for a specific user
+    function addReward(address _user, uint _amount) external payable {
+        require(msg.value == _amount, "Sent value must match reward amount");
+        earnedRewards[_user] += _amount;
+    }
 }
