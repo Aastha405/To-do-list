@@ -26,4 +26,9 @@ contract TaskReward {
         require(msg.value == _amount, "Sent value must match reward amount");
         earnedRewards[_user] += _amount;
     }
+
+    // View total Ether available in the contract for rewards
+    function getTotalRewardsPool() external view returns (uint) {
+        return address(this).balance;
+    }
 }
