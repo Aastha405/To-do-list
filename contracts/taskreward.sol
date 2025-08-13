@@ -2,7 +2,17 @@
 pragma solidity ^0.8.0;
 
 contract TaskReward {
+    address public owner;
     mapping(address => uint) public earnedRewards;
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can call this function");
+        _;
+    }
+
+    constructor() {
+        owner = msg.sender;
+    }
 
     // View earned reward balance
     function viewEarnedRewards(address _user) external view returns (uint) {
@@ -13,7 +23,6 @@ contract TaskReward {
     function claimReward() external {
         uint reward = earnedRewards[msg.sender];
         require(reward > 0, "No rewards to claim");
-
         earnedRewards[msg.sender] = 0;
         payable(msg.sender).transfer(reward);
     }
@@ -30,5 +39,11 @@ contract TaskReward {
     // View total Ether available in the contract for rewards
     function getTotalRewardsPool() external view returns (uint) {
         return address(this).balance;
+    }
+
+    // ✅ New function: Owner can withdraw unclaimed rewards
+    function withdrawUnclaimedRewards(uint _amount) external onlyOwner {
+        require(_amount <= address(this).balance, "Not enough balance in contract");
+        payable(owner).transfer(_amount);
     }
 }
