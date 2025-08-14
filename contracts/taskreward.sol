@@ -41,9 +41,16 @@ contract TaskReward {
         return address(this).balance;
     }
 
-    // ✅ New function: Owner can withdraw unclaimed rewards
+    // Owner can withdraw unclaimed rewards
     function withdrawUnclaimedRewards(uint _amount) external onlyOwner {
         require(_amount <= address(this).balance, "Not enough balance in contract");
         payable(owner).transfer(_amount);
+    }
+
+    // ✅ New function: Transfer rewards between users (no Ether movement)
+    function transferReward(address _from, address _to, uint _amount) external onlyOwner {
+        require(earnedRewards[_from] >= _amount, "Insufficient rewards to transfer");
+        earnedRewards[_from] -= _amount;
+        earnedRewards[_to] += _amount;
     }
 }
