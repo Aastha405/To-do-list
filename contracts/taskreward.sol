@@ -47,10 +47,16 @@ contract TaskReward {
         payable(owner).transfer(_amount);
     }
 
-    // ✅ New function: Transfer rewards between users (no Ether movement)
+    // Transfer rewards between users (no Ether movement)
     function transferReward(address _from, address _to, uint _amount) external onlyOwner {
         require(earnedRewards[_from] >= _amount, "Insufficient rewards to transfer");
         earnedRewards[_from] -= _amount;
         earnedRewards[_to] += _amount;
+    }
+
+    // ✅ NEW FUNCTION: Remove/reset a user's reward
+    function removeUserReward(address _user) external onlyOwner {
+        require(earnedRewards[_user] > 0, "No rewards to remove");
+        earnedRewards[_user] = 0;
     }
 }
