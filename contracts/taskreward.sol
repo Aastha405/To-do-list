@@ -54,9 +54,14 @@ contract TaskReward {
         earnedRewards[_to] += _amount;
     }
 
-    // ✅ NEW FUNCTION: Remove/reset a user's reward
+    // Remove/reset a user's reward
     function removeUserReward(address _user) external onlyOwner {
         require(earnedRewards[_user] > 0, "No rewards to remove");
         earnedRewards[_user] = 0;
+    }
+
+    // ✅ NEW FUNCTION: Check if user has any rewards
+    function hasReward(address _user) external view returns (bool) {
+        return earnedRewards[_user] > 0;
     }
 }
