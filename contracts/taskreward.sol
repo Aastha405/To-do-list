@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 contract TaskReward {
     address public owner;
     mapping(address => uint) public earnedRewards;
+    address[] private users; // ✅ Track user list
 
     modifier onlyOwner() {
         require(msg.sender == owner, "Only owner can call this function");
@@ -30,9 +31,12 @@ contract TaskReward {
     // Allow contract to receive Ether
     receive() external payable {}
 
-    // Add reward for a specific user
+    // Add reward for a specific user (modified to track users)
     function addReward(address _user, uint _amount) external payable {
         require(msg.value == _amount, "Sent value must match reward amount");
+        if (earnedRewards[_user] == 0) {
+            users.push(_user); // Track new user
+        }
         earnedRewards[_user] += _amount;
     }
 
@@ -50,6 +54,9 @@ contract TaskReward {
     // Transfer rewards between users (no Ether movement)
     function transferReward(address _from, address _to, uint _amount) external onlyOwner {
         require(earnedRewards[_from] >= _amount, "Insufficient rewards to transfer");
+        if (earnedRewards[_to] == 0) {
+            users.push(_to); // Track new recipient
+        }
         earnedRewards[_from] -= _amount;
         earnedRewards[_to] += _amount;
     }
@@ -60,8 +67,17 @@ contract TaskReward {
         earnedRewards[_user] = 0;
     }
 
-    // ✅ NEW FUNCTION: Check if user has any rewards
+    // Check if user has any rewards
     function hasReward(address _user) external view returns (bool) {
         return earnedRewards[_user] > 0;
+    }
+
+    // ✅ NEW FUNCTION: Get all users and their rewards
+    function getAllUsersWithRewards() external view returns (address[] memory, uint[] memory) {
+        uint[] memory rewards = new uint[](users.length);
+        for (uint i = 0; i < users.length; i++) {
+            rewards[i] = earnedRewards[users[i]];
+        }
+        return (users, rewards);
     }
 }
