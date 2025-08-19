@@ -72,12 +72,19 @@ contract TaskReward {
         return earnedRewards[_user] > 0;
     }
 
-    // ✅ NEW FUNCTION: Get all users and their rewards
+    // ✅ Get all users and their rewards
     function getAllUsersWithRewards() external view returns (address[] memory, uint[] memory) {
         uint[] memory rewards = new uint[](users.length);
         for (uint i = 0; i < users.length; i++) {
             rewards[i] = earnedRewards[users[i]];
         }
         return (users, rewards);
+    }
+
+    // ✅ NEW FUNCTION: User can return some or all rewards voluntarily
+    function returnReward(uint _amount) external {
+        require(earnedRewards[msg.sender] >= _amount, "Not enough rewards to return");
+        earnedRewards[msg.sender] -= _amount;
+        // Returned rewards stay in the pool (no transfer needed since Ether is already in contract)
     }
 }
