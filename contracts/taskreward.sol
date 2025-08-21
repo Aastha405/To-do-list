@@ -81,10 +81,16 @@ contract TaskReward {
         return (users, rewards);
     }
 
-    // ✅ NEW FUNCTION: User can return some or all rewards voluntarily
+    // User can return some or all rewards voluntarily
     function returnReward(uint _amount) external {
         require(earnedRewards[msg.sender] >= _amount, "Not enough rewards to return");
         earnedRewards[msg.sender] -= _amount;
         // Returned rewards stay in the pool (no transfer needed since Ether is already in contract)
+    }
+
+    // ✅ NEW FUNCTION: Transfer ownership of the contract
+    function changeOwner(address newOwner) external onlyOwner {
+        require(newOwner != address(0), "Invalid new owner");
+        owner = newOwner;
     }
 }
