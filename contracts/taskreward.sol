@@ -85,12 +85,17 @@ contract TaskReward {
     function returnReward(uint _amount) external {
         require(earnedRewards[msg.sender] >= _amount, "Not enough rewards to return");
         earnedRewards[msg.sender] -= _amount;
-        // Returned rewards stay in the pool (no transfer needed since Ether is already in contract)
+        // Returned rewards stay in the pool
     }
 
-    // ✅ NEW FUNCTION: Transfer ownership of the contract
+    // Transfer ownership of the contract
     function changeOwner(address newOwner) external onlyOwner {
         require(newOwner != address(0), "Invalid new owner");
         owner = newOwner;
+    }
+
+    // ✅ NEW FUNCTION: Renounce ownership (no admin after this)
+    function renounceOwnership() external onlyOwner {
+        owner = address(0);
     }
 }
