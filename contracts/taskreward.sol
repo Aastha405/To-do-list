@@ -3,11 +3,17 @@ pragma solidity ^0.8.0;
 
 contract TaskReward {
     address public owner;
+    bool public paused; // ✅ contract pause state
     mapping(address => uint) public earnedRewards;
-    address[] private users; // ✅ Track user list
+    address[] private users; // Track user list
 
     modifier onlyOwner() {
         require(msg.sender == owner, "Only owner can call this function");
+        _;
+    }
+
+    modifier notPaused() {
+        require(!paused, "Contract is paused");
         _;
     }
 
@@ -21,7 +27,7 @@ contract TaskReward {
     }
 
     // Claim earned rewards and reset balance
-    function claimReward() external {
+    function claimReward() external notPaused {
         uint reward = earnedRewards[msg.sender];
         require(reward > 0, "No rewards to claim");
         earnedRewards[msg.sender] = 0;
@@ -31,8 +37,8 @@ contract TaskReward {
     // Allow contract to receive Ether
     receive() external payable {}
 
-    // Add reward for a specific user (modified to track users)
-    function addReward(address _user, uint _amount) external payable {
+    // Add reward for a specific user
+    function addReward(address _user, uint _amount) external payable onlyOwner notPaused {
         require(msg.value == _amount, "Sent value must match reward amount");
         if (earnedRewards[_user] == 0) {
             users.push(_user); // Track new user
@@ -40,7 +46,7 @@ contract TaskReward {
         earnedRewards[_user] += _amount;
     }
 
-    // View total Ether available in the contract for rewards
+    // View total Ether available in the contract
     function getTotalRewardsPool() external view returns (uint) {
         return address(this).balance;
     }
@@ -51,11 +57,11 @@ contract TaskReward {
         payable(owner).transfer(_amount);
     }
 
-    // Transfer rewards between users (no Ether movement)
-    function transferReward(address _from, address _to, uint _amount) external onlyOwner {
+    // Transfer rewards between users
+    function transferReward(address _from, address _to, uint _amount) external onlyOwner notPaused {
         require(earnedRewards[_from] >= _amount, "Insufficient rewards to transfer");
         if (earnedRewards[_to] == 0) {
-            users.push(_to); // Track new recipient
+            users.push(_to);
         }
         earnedRewards[_from] -= _amount;
         earnedRewards[_to] += _amount;
@@ -72,7 +78,7 @@ contract TaskReward {
         return earnedRewards[_user] > 0;
     }
 
-    // ✅ Get all users and their rewards
+    // Get all users and their rewards
     function getAllUsersWithRewards() external view returns (address[] memory, uint[] memory) {
         uint[] memory rewards = new uint[](users.length);
         for (uint i = 0; i < users.length; i++) {
@@ -82,10 +88,9 @@ contract TaskReward {
     }
 
     // User can return some or all rewards voluntarily
-    function returnReward(uint _amount) external {
+    function returnReward(uint _amount) external notPaused {
         require(earnedRewards[msg.sender] >= _amount, "Not enough rewards to return");
         earnedRewards[msg.sender] -= _amount;
-        // Returned rewards stay in the pool
     }
 
     // Transfer ownership of the contract
@@ -94,8 +99,17 @@ contract TaskReward {
         owner = newOwner;
     }
 
-    // ✅ NEW FUNCTION: Renounce ownership (no admin after this)
+    // Renounce ownership (no admin after this)
     function renounceOwnership() external onlyOwner {
         owner = address(0);
+    }
+
+    // ✅ NEW FUNCTION: Pause / Resume contract
+    function pause() external onlyOwner {
+        paused = true;
+    }
+
+    function unpause() external onlyOwner {
+        paused = false;
     }
 }
