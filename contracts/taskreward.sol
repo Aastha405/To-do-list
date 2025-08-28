@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-
 contract TaskReward {
     address public owner;
     bool public paused; 
-    uint public totalDistributed; // ✅ track total paid-out rewards
+    uint public totalDistributed; // track total paid-out rewards
     mapping(address => uint) public earnedRewards;
     address[] private users; 
 
@@ -25,12 +24,11 @@ contract TaskReward {
         return earnedRewards[_user];
     }
 
-    // 🔹 Modified claimReward: now updates totalDistributed
     function claimReward() external notPaused {
         uint reward = earnedRewards[msg.sender];
         require(reward > 0, "No rewards to claim");
         earnedRewards[msg.sender] = 0;
-        totalDistributed += reward; // track distribution statistics
+        totalDistributed += reward;
         payable(msg.sender).transfer(reward);
     }
 
@@ -101,8 +99,12 @@ contract TaskReward {
         paused = false;
     }
 
-    // ✅ NEW FUNCTION: view how much rewards were already distributed
     function getTotalDistributedRewards() external view returns (uint) {
         return totalDistributed;
+    }
+
+    // ✅ NEW FUNCTION: Get number of unique users
+    function getUserCount() external view returns (uint) {
+        return users.length;
     }
 }
