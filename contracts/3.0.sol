@@ -1,10 +1,49 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract ToDoList {
-    // existing storage and logic...
+    enum Priority { Low, Medium, High }
 
-    // Example: Add new function to return all expired tasks
-    function getExpiredTasks() public view returns (Task[] memory) {
-        // logic to filter and return expired tasks
+    struct Task {
+        uint id;
+        string description;
+        bool completed;
+        uint deadline;
+        Priority priority;
+    }
+
+    uint public taskCount = 0;
+    mapping(uint => Task) public tasks;
+
+    event TaskCreated(uint id, string description, bool completed, uint deadline, Priority priority);
+    event TaskCompleted(uint id, bool completed);
+
+    function addTask(string memory _description, uint _deadline, Priority _priority) public {
+        taskCount++;
+        tasks[taskCount] = Task(taskCount, _description, false, _deadline, _priority);
+        emit TaskCreated(taskCount, _description, false, _deadline, _priority);
+    }
+
+    function toggleCompleted(uint _id) public {
+        Task storage task = tasks[_id];
+        task.completed = !task.completed;
+        emit TaskCompleted(_id, task.completed);
+    }
+
+    // NEW FUNCTION: Retrieve all task IDs for a specific priority
+    function getTasksByPriority(Priority _priority) public view returns (uint[] memory) {
+        uint[] memory tempList = new uint[](taskCount);
+        uint count = 0;
+        for (uint i = 1; i <= taskCount; i++) {
+            if (tasks[i].priority == _priority) {
+                tempList[count] = i;
+                count++;
+            }
+        }
+        uint[] memory priorityTasks = new uint[](count);
+        for (uint j = 0; j < count; j++) {
+            priorityTasks[j] = tempList[j];
+        }
+        return priorityTasks;
     }
 }
