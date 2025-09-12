@@ -30,7 +30,7 @@ contract ToDoList {
         emit TaskCompleted(_id, task.completed);
     }
 
-    // NEW FUNCTION: Retrieve all task IDs for a specific priority
+    // Retrieve all task IDs for a specific priority
     function getTasksByPriority(Priority _priority) public view returns (uint[] memory) {
         uint[] memory tempList = new uint[](taskCount);
         uint count = 0;
@@ -45,5 +45,22 @@ contract ToDoList {
             priorityTasks[j] = tempList[j];
         }
         return priorityTasks;
+    }
+
+    // NEW FUNCTION: Retrieve all incomplete task IDs
+    function getIncompleteTasks() public view returns (uint[] memory) {
+        uint[] memory tempList = new uint[](taskCount);
+        uint count = 0;
+        for (uint i = 1; i <= taskCount; i++) {
+            if (!tasks[i].completed) {
+                tempList[count] = i;
+                count++;
+            }
+        }
+        uint[] memory incompleteTasks = new uint[](count);
+        for (uint j = 0; j < count; j++) {
+            incompleteTasks[j] = tempList[j];
+        }
+        return incompleteTasks;
     }
 }
