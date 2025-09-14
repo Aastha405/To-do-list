@@ -64,7 +64,7 @@ contract ToDoList {
         return incompleteTasks;
     }
 
-    // NEW FUNCTION: Retrieve all overdue task IDs
+    // Retrieve all overdue task IDs
     function getOverdueTasks() public view returns (uint[] memory) {
         uint[] memory tempList = new uint[](taskCount);
         uint count = 0;
@@ -79,5 +79,22 @@ contract ToDoList {
             overdueTasks[j] = tempList[j];
         }
         return overdueTasks;
+    }
+
+    // NEW FUNCTION: Retrieve all completed task IDs
+    function getCompletedTasks() public view returns (uint[] memory) {
+        uint[] memory tempList = new uint[](taskCount);
+        uint count = 0;
+        for (uint i = 1; i <= taskCount; i++) {
+            if (tasks[i].completed) {
+                tempList[count] = i;
+                count++;
+            }
+        }
+        uint[] memory completedTasks = new uint[](count);
+        for (uint j = 0; j < count; j++) {
+            completedTasks[j] = tempList[j];
+        }
+        return completedTasks;
     }
 }
