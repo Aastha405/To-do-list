@@ -17,6 +17,7 @@ contract ToDoList {
 
     event TaskCreated(uint id, string description, bool completed, uint deadline, Priority priority);
     event TaskCompleted(uint id, bool completed);
+    event TaskDescriptionUpdated(uint id, string newDescription);
 
     function addTask(string memory _description, uint _deadline, Priority _priority) public {
         taskCount++;
@@ -81,7 +82,7 @@ contract ToDoList {
         return overdueTasks;
     }
 
-    // NEW FUNCTION: Retrieve all completed task IDs
+    // Retrieve all completed task IDs
     function getCompletedTasks() public view returns (uint[] memory) {
         uint[] memory tempList = new uint[](taskCount);
         uint count = 0;
@@ -96,5 +97,12 @@ contract ToDoList {
             completedTasks[j] = tempList[j];
         }
         return completedTasks;
+    }
+
+    // NEW FUNCTION: Update a task's description
+    function updateTaskDescription(uint _id, string memory _newDescription) public {
+        require(_id > 0 && _id <= taskCount, "Invalid task ID");
+        tasks[_id].description = _newDescription;
+        emit TaskDescriptionUpdated(_id, _newDescription);
     }
 }
