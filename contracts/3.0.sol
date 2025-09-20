@@ -18,6 +18,7 @@ contract ToDoList {
     event TaskCreated(uint id, string description, bool completed, uint deadline, Priority priority);
     event TaskCompleted(uint id, bool completed);
     event TaskDescriptionUpdated(uint id, string newDescription);
+    event TaskDeadlineUpdated(uint id, uint newDeadline);
 
     function addTask(string memory _description, uint _deadline, Priority _priority) public {
         taskCount++;
@@ -99,10 +100,17 @@ contract ToDoList {
         return completedTasks;
     }
 
-    // NEW FUNCTION: Update a task's description
+    // Update a task's description
     function updateTaskDescription(uint _id, string memory _newDescription) public {
         require(_id > 0 && _id <= taskCount, "Invalid task ID");
         tasks[_id].description = _newDescription;
         emit TaskDescriptionUpdated(_id, _newDescription);
+    }
+
+    // NEW FUNCTION: Update a task's deadline
+    function updateTaskDeadline(uint _id, uint _newDeadline) public {
+        require(_id > 0 && _id <= taskCount, "Invalid task ID");
+        tasks[_id].deadline = _newDeadline;
+        emit TaskDeadlineUpdated(_id, _newDeadline);
     }
 }
