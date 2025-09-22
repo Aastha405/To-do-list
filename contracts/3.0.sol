@@ -19,6 +19,7 @@ contract ToDoList {
     event TaskCompleted(uint id, bool completed);
     event TaskDescriptionUpdated(uint id, string newDescription);
     event TaskDeadlineUpdated(uint id, uint newDeadline);
+    event TaskDeleted(uint id);
 
     function addTask(string memory _description, uint _deadline, Priority _priority) public {
         taskCount++;
@@ -107,10 +108,17 @@ contract ToDoList {
         emit TaskDescriptionUpdated(_id, _newDescription);
     }
 
-    // NEW FUNCTION: Update a task's deadline
+    // Update a task's deadline
     function updateTaskDeadline(uint _id, uint _newDeadline) public {
         require(_id > 0 && _id <= taskCount, "Invalid task ID");
         tasks[_id].deadline = _newDeadline;
         emit TaskDeadlineUpdated(_id, _newDeadline);
+    }
+
+    // NEW FUNCTION: Delete a task
+    function deleteTask(uint _id) public {
+        require(_id > 0 && _id <= taskCount, "Invalid task ID");
+        delete tasks[_id];
+        emit TaskDeleted(_id);
     }
 }
