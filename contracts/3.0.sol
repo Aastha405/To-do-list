@@ -123,10 +123,20 @@ contract ToDoList {
         emit TaskDeleted(_id);
     }
 
-    // NEW FUNCTION: Update a task's priority
+    // Update a task's priority
     function updateTaskPriority(uint _id, Priority _newPriority) public {
         require(_id > 0 && _id <= taskCount, "Invalid task ID");
         tasks[_id].priority = _newPriority;
         emit TaskPriorityUpdated(_id, _newPriority);
+    }
+
+    // NEW FUNCTION: Mark all tasks as completed
+    function markAllCompleted() public {
+        for (uint i = 1; i <= taskCount; i++) {
+            if (!tasks[i].completed) {
+                tasks[i].completed = true;
+                emit TaskCompleted(i, true);
+            }
+        }
     }
 }
