@@ -21,6 +21,7 @@ contract ToDoList {
     event TaskDeadlineUpdated(uint id, uint newDeadline);
     event TaskDeleted(uint id);
     event TaskPriorityUpdated(uint id, Priority newPriority);
+    event AllTasksCleared();
 
     function addTask(string memory _description, uint _deadline, Priority _priority) public {
         taskCount++;
@@ -34,7 +35,6 @@ contract ToDoList {
         emit TaskCompleted(_id, task.completed);
     }
 
-    // Retrieve all task IDs for a specific priority
     function getTasksByPriority(Priority _priority) public view returns (uint[] memory) {
         uint[] memory tempList = new uint[](taskCount);
         uint count = 0;
@@ -51,7 +51,6 @@ contract ToDoList {
         return priorityTasks;
     }
 
-    // Retrieve all incomplete task IDs
     function getIncompleteTasks() public view returns (uint[] memory) {
         uint[] memory tempList = new uint[](taskCount);
         uint count = 0;
@@ -68,7 +67,6 @@ contract ToDoList {
         return incompleteTasks;
     }
 
-    // Retrieve all overdue task IDs
     function getOverdueTasks() public view returns (uint[] memory) {
         uint[] memory tempList = new uint[](taskCount);
         uint count = 0;
@@ -85,7 +83,6 @@ contract ToDoList {
         return overdueTasks;
     }
 
-    // Retrieve all completed task IDs
     function getCompletedTasks() public view returns (uint[] memory) {
         uint[] memory tempList = new uint[](taskCount);
         uint count = 0;
@@ -102,35 +99,30 @@ contract ToDoList {
         return completedTasks;
     }
 
-    // Update a task's description
     function updateTaskDescription(uint _id, string memory _newDescription) public {
         require(_id > 0 && _id <= taskCount, "Invalid task ID");
         tasks[_id].description = _newDescription;
         emit TaskDescriptionUpdated(_id, _newDescription);
     }
 
-    // Update a task's deadline
     function updateTaskDeadline(uint _id, uint _newDeadline) public {
         require(_id > 0 && _id <= taskCount, "Invalid task ID");
         tasks[_id].deadline = _newDeadline;
         emit TaskDeadlineUpdated(_id, _newDeadline);
     }
 
-    // Delete a task
     function deleteTask(uint _id) public {
         require(_id > 0 && _id <= taskCount, "Invalid task ID");
         delete tasks[_id];
         emit TaskDeleted(_id);
     }
 
-    // Update a task's priority
     function updateTaskPriority(uint _id, Priority _newPriority) public {
         require(_id > 0 && _id <= taskCount, "Invalid task ID");
         tasks[_id].priority = _newPriority;
         emit TaskPriorityUpdated(_id, _newPriority);
     }
 
-    // NEW FUNCTION: Mark all tasks as completed
     function markAllCompleted() public {
         for (uint i = 1; i <= taskCount; i++) {
             if (!tasks[i].completed) {
@@ -138,5 +130,14 @@ contract ToDoList {
                 emit TaskCompleted(i, true);
             }
         }
+    }
+
+    // NEW FUNCTION: Clear all tasks instantly
+    function clearAllTasks() public {
+        for (uint i = 1; i <= taskCount; i++) {
+            delete tasks[i];
+        }
+        taskCount = 0;
+        emit AllTasksCleared();
     }
 }
