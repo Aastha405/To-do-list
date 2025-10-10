@@ -131,13 +131,4 @@ contract ToDoList {
             }
         }
     }
-
-    // NEW FUNCTION: Clear all tasks instantly
-    function clearAllTasks() public {
-        for (uint i = 1; i <= taskCount; i++) {
-            delete tasks[i];
-        }
-        taskCount = 0;
-        emit AllTasksCleared();
-    }
 }
