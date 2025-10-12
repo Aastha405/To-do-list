@@ -122,13 +122,6 @@ contract ToDoList {
         tasks[_id].priority = _newPriority;
         emit TaskPriorityUpdated(_id, _newPriority);
     }
-
-    function markAllCompleted() public {
-        for (uint i = 1; i <= taskCount; i++) {
-            if (!tasks[i].completed) {
-                tasks[i].completed = true;
-                emit TaskCompleted(i, true);
-            }
         }
     }
 }
