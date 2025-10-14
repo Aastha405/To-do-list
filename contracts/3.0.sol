@@ -110,12 +110,6 @@ contract ToDoList {
         tasks[_id].deadline = _newDeadline;
         emit TaskDeadlineUpdated(_id, _newDeadline);
     }
-
-    function deleteTask(uint _id) public {
-        require(_id > 0 && _id <= taskCount, "Invalid task ID");
-        delete tasks[_id];
-        emit TaskDeleted(_id);
-    }
         }
     }
 }
