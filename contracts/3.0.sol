@@ -98,12 +98,6 @@ contract ToDoList {
         }
         return completedTasks;
     }
-
-    function updateTaskDescription(uint _id, string memory _newDescription) public {
-        require(_id > 0 && _id <= taskCount, "Invalid task ID");
-        tasks[_id].description = _newDescription;
-        emit TaskDescriptionUpdated(_id, _newDescription);
-    }
         }
     }
 }
