@@ -92,12 +92,5 @@ contract ToDoList {
                 count++;
             }
         }
-        uint[] memory completedTasks = new uint[](count);
-        for (uint j = 0; j < count; j++) {
-            completedTasks[j] = tempList[j];
-        }
-        return completedTasks;
-    }
-        }
     }
 }
