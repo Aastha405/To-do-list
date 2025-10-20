@@ -82,15 +82,6 @@ contract ToDoList {
         }
         return overdueTasks;
     }
-
-    function getCompletedTasks() public view returns (uint[] memory) {
-        uint[] memory tempList = new uint[](taskCount);
-        uint count = 0;
-        for (uint i = 1; i <= taskCount; i++) {
-            if (tasks[i].completed) {
-                tempList[count] = i;
-                count++;
-            }
         }
     }
 }
