@@ -76,12 +76,6 @@ contract ToDoList {
                 count++;
             }
         }
-        uint[] memory overdueTasks = new uint[](count);
-        for (uint j = 0; j < count; j++) {
-            overdueTasks[j] = tempList[j];
-        }
-        return overdueTasks;
-    }
         }
     }
 }
