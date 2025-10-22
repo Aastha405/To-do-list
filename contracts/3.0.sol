@@ -66,15 +66,6 @@ contract ToDoList {
         }
         return incompleteTasks;
     }
-
-    function getOverdueTasks() public view returns (uint[] memory) {
-        uint[] memory tempList = new uint[](taskCount);
-        uint count = 0;
-        for (uint i = 1; i <= taskCount; i++) {
-            if (!tasks[i].completed && tasks[i].deadline < block.timestamp) {
-                tempList[count] = i;
-                count++;
-            }
         }
         }
     }
