@@ -50,22 +50,6 @@ contract ToDoList {
         }
         return priorityTasks;
     }
-
-    function getIncompleteTasks() public view returns (uint[] memory) {
-        uint[] memory tempList = new uint[](taskCount);
-        uint count = 0;
-        for (uint i = 1; i <= taskCount; i++) {
-            if (!tasks[i].completed) {
-                tempList[count] = i;
-                count++;
-            }
-        }
-        uint[] memory incompleteTasks = new uint[](count);
-        for (uint j = 0; j < count; j++) {
-            incompleteTasks[j] = tempList[j];
-        }
-        return incompleteTasks;
-    }
         }
         }
     }
