@@ -33,23 +33,7 @@ contract ToDoList {
         Task storage task = tasks[_id];
         task.completed = !task.completed;
         emit TaskCompleted(_id, task.completed);
-    }
 
-    function getTasksByPriority(Priority _priority) public view returns (uint[] memory) {
-        uint[] memory tempList = new uint[](taskCount);
-        uint count = 0;
-        for (uint i = 1; i <= taskCount; i++) {
-            if (tasks[i].priority == _priority) {
-                tempList[count] = i;
-                count++;
-            }
-        }
-        uint[] memory priorityTasks = new uint[](count);
-        for (uint j = 0; j < count; j++) {
-            priorityTasks[j] = tempList[j];
-        }
-        return priorityTasks;
-    }
         }
         }
     }
