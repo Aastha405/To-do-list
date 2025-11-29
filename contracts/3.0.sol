@@ -23,18 +23,33 @@ contract ToDoList {
     event TaskPriorityUpdated(uint id, Priority newPriority);
     event AllTasksCleared();
 
+    // Add a new task
     function addTask(string memory _description, uint _deadline, Priority _priority) public {
         taskCount++;
         tasks[taskCount] = Task(taskCount, _description, false, _deadline, _priority);
         emit TaskCreated(taskCount, _description, false, _deadline, _priority);
     }
 
+    // Toggle task completion
     function toggleCompleted(uint _id) public {
         Task storage task = tasks[_id];
         task.completed = !task.completed;
         emit TaskCompleted(_id, task.completed);
+    }
 
-        }
-        }
+    // ✅ NEW FUNCTION: Return complete task details
+    function getTask(uint _id)
+        public
+        view
+        returns (
+            uint id,
+            string memory description,
+            bool completed,
+            uint deadline,
+            Priority priority
+        )
+    {
+        Task memory t = tasks[_id];
+        return (t.id, t.description, t.completed, t.deadline, t.priority);
     }
 }
